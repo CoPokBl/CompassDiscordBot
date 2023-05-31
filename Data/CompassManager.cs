@@ -1,5 +1,6 @@
 using CompassApi;
 using Discord;
+using GeneralPurposeLib;
 
 namespace CompassDiscordBot.Data; 
 
@@ -14,7 +15,7 @@ public static class CompassManager {
         // Test if the token is still valid
         CompassClient client = new(loginState);
         try {
-            CompassUser _ = client.GetUserProfile().Result;
+            CompassUser _ = client.GetUserProfile().Result.ThrowIfNull();
         }
         catch (Exception) {
             return false;

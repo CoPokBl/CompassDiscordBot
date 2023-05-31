@@ -16,7 +16,11 @@ public class GetProfileCommand : ICommandExecutionHandler {
         hide ??= true;
 
         CompassClient compass = new(state!);
-        CompassUser profile = await compass.GetUserProfile();
+        CompassUser? profile = await compass.GetUserProfile();
+        if (profile == null!) {
+            await cmd.RespondWithEmbedAsync("Error", "An error occurred while fetching your profile. Code: Null profile", ResponseType.Error);
+            return;
+        }
 
         string desc = $"Email: {profile.Email}\n" +
                       $"House: {profile.House}\n" +
